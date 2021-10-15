@@ -1,5 +1,8 @@
 
-const API_BASE_URL = process.env.API_BASE_URL || "https://name-generator-backend-nam.herokuapp.com/"
+// const API_BASE_URL = process.env.API_BASE_URL || "https://name-generator-backend-nam.herokuapp.com/"
+
+//working with dev db and localhost:5000
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:5000"
 
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
@@ -23,23 +26,41 @@ async function fetchJson(url, options) {
     }
 }
 
+const users = [
+    {
+        username: "nam",
+        password: "supperkid"
+    },
+    {
+        username: "Duy",
+        password: "superkid"
+    }
+
+]
+
 export async function createUser(user, signal){
-    const url = `${API_BASE_URL}`;
-    const create = {
-        method: "POST",
-        headers,
-        signal,
-        body: JSON.stringify({data:user})
-    };
-    return await fetchJson(url,create);
+    // const url = `${API_BASE_URL}`;
+    // const create = {
+    //     method: "POST",
+    //     headers,
+    //     signal,
+    //     body: JSON.stringify({data:user})
+    // };
+    // return await fetchJson(url,create);
+    users.push(user);
+    return user
 }
 
 
+
+
+
 export async function readUsers(signal) {
-    const url = `${API_BASE_URL}`;
-    const read = {
-        headers,
-        signal
-    }
-    return await fetchJson(url,read);
+    // const url = `${API_BASE_URL}`;
+    // const read = {
+    //     headers,
+    //     signal
+    // }
+    // return await fetchJson(url,read);
+    return users
 }
