@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory  } from "react-router-dom";
+import Errors from "../../errors";
 import { createUser } from "../../utils/api";
 
 export default function Signup(){
@@ -10,6 +11,7 @@ export default function Signup(){
     }
 
     const [user, setUser] = useState(initialUser);
+    const [error, setError] = useState(null);
 
     const handleChange = ({target: {name, value}}) => {
         setUser((prevUser) => ({
@@ -23,6 +25,7 @@ export default function Signup(){
         event.preventDefault();
         createUser(user)
         .then(() => history.push("/"))
+        .catch(setError);
     }
     console.log(user);
 
@@ -33,6 +36,7 @@ export default function Signup(){
 
     return (
         <div>
+            <Errors error = {error}/>
             <form onSubmit = {handleSubmit}> 
                 <fieldset>
                     <legend>Sign up</legend>

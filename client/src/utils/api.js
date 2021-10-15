@@ -39,16 +39,14 @@ const users = [
 ]
 
 export async function createUser(user, signal){
-    // const url = `${API_BASE_URL}`;
-    // const create = {
-    //     method: "POST",
-    //     headers,
-    //     signal,
-    //     body: JSON.stringify({data:user})
-    // };
-    // return await fetchJson(url,create);
-    users.push(user);
-    return user
+    const url = `${API_BASE_URL}/accounts/signup`;
+    const create = {
+        method: "POST",
+        headers,
+        signal,
+        body: JSON.stringify({data:user})
+    };
+    return await fetchJson(url,create);
 }
 
 
