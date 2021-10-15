@@ -26,17 +26,17 @@ async function fetchJson(url, options) {
     }
 }
 
-const users = [
-    {
-        username: "nam",
-        password: "supperkid"
-    },
-    {
-        username: "Duy",
-        password: "superkid"
-    }
+// const users = [
+//     {
+//         username: "nam",
+//         password: "supperkid"
+//     },
+//     {
+//         username: "Duy",
+//         password: "superkid"
+//     }
 
-]
+// ]
 
 export async function createUser(user, signal){
     const url = `${API_BASE_URL}/accounts/signup`;
@@ -49,16 +49,11 @@ export async function createUser(user, signal){
     return await fetchJson(url,create);
 }
 
-
-
-
-
 export async function readUsers(signal) {
-    // const url = `${API_BASE_URL}`;
-    // const read = {
-    //     headers,
-    //     signal
-    // }
-    // return await fetchJson(url,read);
-    return users
+    const url = `${API_BASE_URL}`;
+    const read = {
+        headers,
+        signal
+    }
+    return await fetchJson(url,read);
 }

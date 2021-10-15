@@ -14,7 +14,9 @@ export default function Home() {
         readUsers(abortController.signal)
         .then(setUsers)
         .catch(setError);
+        return () => abortController.abort();
     }, [])
+    
     console.log(users);
 
     return (
