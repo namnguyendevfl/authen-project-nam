@@ -28,7 +28,6 @@ export default function Signup(){
         }))
     }
 
-
     const handleSubmit = (event) => {
         event.preventDefault();
         createUser(user)
@@ -41,6 +40,8 @@ export default function Signup(){
         history.push("/");
     };
 
+    const now = new Date();
+    const currentYear = now.getFullYear()
     const days = []
     for (let i = 1; i<32; i++) days.push(i)
     const day = days.map((day,idx) => <option value = {day}>{day}</option>)
@@ -49,8 +50,9 @@ export default function Signup(){
     const month = months.map((month,idx) => <option value = {month}>{month}</option>)
 
     const years = []
-    for (let i = 1900; i<2022; i++) years.push(i)
+    for (let i = 1900; i<currentYear-12; i++) years.push(i)
     const year = years.map((year,idx) => <option value = {year}>{year}</option>)
+    
     return (
         <div>
             <Errors error = {error}/>
@@ -66,8 +68,8 @@ export default function Signup(){
                         placeholder = "First name"
                         value = {user.username}
                         onChange = {handleChange}
+                        required = "true"
                         >
-
                         </input>
                         </div>
                 <div className = "ps-1">
@@ -79,6 +81,7 @@ export default function Signup(){
                         placeholder = "Last name"
                         value = {user.username}
                         onChange = {handleChange}
+                        required = "true"
                         >
                         </input>
                         </div>
@@ -92,6 +95,7 @@ export default function Signup(){
                         type = "text"
                         value = {user.username}
                         onChange = {handleChange}
+                        required = "true"
                         >
                         </input>
                     </div>
@@ -105,6 +109,7 @@ export default function Signup(){
                         placeholder = "Password"
                         value = {user.password}
                         onChange = {handleChange}
+                        required = "true"
                         >
                         </input>
                     </div>
@@ -178,6 +183,7 @@ export default function Signup(){
                             onChange={handleChange}
                             checked={user.acceptTerm}
                             value="acceptTerm"
+                            required = "true"
                         ></input>
                         <label className = "px-2" htmlFor = "acceptTerm">I accept the Term of Use and Privacy Policy</label>
 

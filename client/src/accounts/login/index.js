@@ -5,7 +5,7 @@ import Errors from "../../errors";
 
 export default function Login({setFound, users}) {
     const initialUser = {
-        username: "",
+        userName: "",
         password: "",
     }
 
@@ -21,7 +21,7 @@ export default function Login({setFound, users}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const found = users.some((user) => user.username === userLogedIn.username && user.password === userLogedIn.password);
+        const found = users.some((user) => user.userName === userLogedIn.userName && user.password === userLogedIn.password);
         found
         ?   setFound(() => found)
         :   setError(() => ({
@@ -41,8 +41,8 @@ export default function Login({setFound, users}) {
                 <div className = "d-flex justify-content-center align-item-center py-2 pt-5">
                     <input
                         className = "w-75"
-                        id = "username"
-                        name = "username"
+                        id = "userName"
+                        name = "userName"
                         type = "text"
                         placeholder = "username"
                         value = {userLogedIn.username}
