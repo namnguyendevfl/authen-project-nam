@@ -6,14 +6,22 @@ import { createUser } from "../../utils/api";
 export default function Signup(){
     const history = useHistory();
     const initialUser = {
-        username : "",
-        password : ""
+        firstName: "",
+        surName: "",
+        userName : "",
+        password : "",
+        ageDay: "",
+        ageMonth:"",
+        ageYear: "",
+        gender: "",
+        acceptTerm: "",
     }
 
     const [user, setUser] = useState(initialUser);
     const [error, setError] = useState(null);
 
-    const handleChange = ({target: {name, value}}) => {
+    const handleChange = ({target: {name, value, type, checked}}) => {
+        value = type === "checkbox" ? checked : value
         setUser((prevUser) => ({
             ...prevUser,
             [name]: value
@@ -78,8 +86,8 @@ export default function Signup(){
                     <div className = "d-flex px-3 pt-3">
                         <input
                         className = "px-1 w-100 px-1"
-                        id = "username"
-                        name = "username"
+                        id = "userName"
+                        name = "userName"
                         placeholder = "Mobile number or email address"
                         type = "text"
                         value = {user.username}
@@ -107,9 +115,9 @@ export default function Signup(){
                         <select
                             className = "pe-1"
                             id = "day"
-                            name = "day"
-                            onChange = ""
-                            value = ""
+                            name = "ageDay"
+                            value = {user.ageDay}
+                            onChange = {handleChange}
                             >
                             {day}
                         </select>
@@ -117,9 +125,9 @@ export default function Signup(){
                         <div className = "pe-1"> 
                         <select
                             id = "month"
-                            name = "month"
-                            onChange = ""
-                            value = ""
+                            name = "ageMonth"
+                            value = {user.ageMonth}
+                            onChange = {handleChange}
                             >
                             {month}
                         </select>
@@ -127,9 +135,9 @@ export default function Signup(){
                         <div className = "pe-1"> 
                         <select
                             id = "year"
-                            name = "year"
-                            onChange = ""
-                            value = ""
+                            name = "ageYear"
+                            value = {user.ageYear}
+                            onChange = {handleChange}
                             >
                             {year}
                         </select>
@@ -140,10 +148,11 @@ export default function Signup(){
                         <div>                         
                         <input 
                         id = "male"
-                        name = "male"
+                        name = "gender"
                         type = "radio"
-                        onChange = ""
-                        checked = ""
+                        value = "male"
+                        onChange = {handleChange}
+                        checked = {user.gender === "male"}
                         >
                         </input>
                           
@@ -151,10 +160,11 @@ export default function Signup(){
                         </div>  
                         <input 
                         id = "female"
-                        name = "female"
+                        name = "gender"
                         type = "radio"
-                        onChange = ""
-                        checked = ""
+                        value = "female"
+                        onChange = {handleChange}
+                        checked = {user.gender === "female"}
                         >
                         </input>
                         <label htmlFor = "female" className = "px-2"> Female </label>
@@ -163,8 +173,13 @@ export default function Signup(){
                     <div className="text-start px-3 pt-2">
                         <input
                             type = "checkbox"
+                            id = "acceptTerm"
+                            name = "acceptTerm"
+                            onChange={handleChange}
+                            checked={user.acceptTerm}
+                            value="acceptTerm"
                         ></input>
-                        <label className = "px-2">I accept the Term of Use and Privacy Policy</label>
+                        <label className = "px-2" htmlFor = "acceptTerm">I accept the Term of Use and Privacy Policy</label>
 
                     </div>
                     <div className = "px-3 py-3">
