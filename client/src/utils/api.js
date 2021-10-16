@@ -1,6 +1,6 @@
 
 // const API_BASE_URL = process.env.API_BASE_URL || "https://name-generator-backend-nam.herokuapp.com"
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:5000"
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:4000"
 
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
@@ -38,6 +38,26 @@ export async function createUser(user, signal){
 
 export async function readUsers(signal) {
     const url = `${API_BASE_URL}`;
+    const read = {
+        headers,
+        signal
+    }
+    return await fetchJson(url,read);
+}
+
+export async function createDeck(deck, signal) {
+    const url = `${API_BASE_URL}/flashcards/decks/new`;
+    const create = {
+        method: "POST",
+        headers,
+        signal,
+        body: JSON.stringify({data:deck})
+    };
+    return await fetchJson(url,create);
+}
+
+export async function readDeck(signal) {
+    const url = `${API_BASE_URL}/flashcards`;
     const read = {
         headers,
         signal
