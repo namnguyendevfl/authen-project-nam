@@ -27,7 +27,10 @@ export default function Home() {
                 This is home
             </div>
         :   <div>
-                <Login users = {users} setFound = {setFound}/>
+                <Login  users = {users} 
+                        setFound = {setFound}
+                        found = {found}
+                        />
             </div>}
         </>
     )

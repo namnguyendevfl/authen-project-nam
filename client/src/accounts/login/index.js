@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom"; 
+import { useHistory } from "react-router-dom"; 
+import Errors from "../../errors";
 
 export default function Login({setFound, users}) {
     const initialUser = {
@@ -8,6 +9,7 @@ export default function Login({setFound, users}) {
     }
 
     const [userLogedIn, setUserLogedIn] = useState(initialUser);
+    const [error, setError] = useState(null);
     
     const handleChange = ({target: {name, value}}) => {
         setUserLogedIn((prevUser) => ({
@@ -18,19 +20,21 @@ export default function Login({setFound, users}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setFound(() => 
-        users.some((user) => user.username === userLogedIn.username && user.password === userLogedIn.password)
-        )
-    }
+        const found = users.some((user) => user.username === userLogedIn.username && user.password === userLogedIn.password);
+        found
+        ?   setFound(() => found)
+        :   setError(() => ({
+            message: "wrong credentials",
+            }));
 
+    }
     const history = useHistory();
     const handleSignup = () => {
         history.push("/accounts/signup");
     }
-    console.log(userLogedIn)
-
     return (
         <div>
+            <Errors error = {error} />
             <form onSubmit = {handleSubmit}>
                 <fieldset> 
                     <legend> Login </legend>
