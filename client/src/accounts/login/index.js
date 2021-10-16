@@ -44,7 +44,7 @@ export default function Login({setFound, users}) {
                         id = "userName"
                         name = "userName"
                         type = "text"
-                        placeholder = "username"
+                        placeholder = "Phone number or email"
                         value = {userLogedIn.username}
                         onChange = {handleChange}
                         >
@@ -56,7 +56,7 @@ export default function Login({setFound, users}) {
                         id = "password"
                         name = "password"
                         type = "password"
-                        placeholder = "password"
+                        placeholder = "Password"
                         value = {userLogedIn.password}
                         onChange = {handleChange}
                         >

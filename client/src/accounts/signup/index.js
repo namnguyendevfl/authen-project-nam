@@ -66,7 +66,7 @@ export default function Signup(){
                         name = "firstName"
                         type = "text"
                         placeholder = "First name"
-                        value = {user.username}
+                        value = {user.firstName}
                         onChange = {handleChange}
                         required = "true"
                         >
@@ -79,7 +79,7 @@ export default function Signup(){
                         name = "surName"
                         type = "text"
                         placeholder = "Last name"
-                        value = {user.username}
+                        value = {user.surName}
                         onChange = {handleChange}
                         required = "true"
                         >
@@ -91,9 +91,9 @@ export default function Signup(){
                         className = "px-1 w-100 px-1"
                         id = "userName"
                         name = "userName"
-                        placeholder = "Mobile number or email address"
+                        placeholder = "Mobile phone number or email address"
                         type = "text"
-                        value = {user.username}
+                        value = {user.userName}
                         onChange = {handleChange}
                         required = "true"
                         >
@@ -118,32 +118,39 @@ export default function Signup(){
                         <div className = "d-flex">
                         <div className = "pe-1"> 
                         <select
-                            className = "pe-1"
-                            id = "day"
-                            name = "ageDay"
-                            value = {user.ageDay}
-                            onChange = {handleChange}
-                            >
-                            {day}
-                        </select>
-                        </div>
-                        <div className = "pe-1"> 
-                        <select
+                            className = "px-1"
                             id = "month"
                             name = "ageMonth"
                             value = {user.ageMonth}
                             onChange = {handleChange}
                             >
+                            <option> Month </option>
                             {month}
                         </select>
                         </div>
                         <div className = "pe-1"> 
                         <select
+                            className = "text-center ps-1"
+                            id = "day"
+                            name = "ageDay"
+                            value = {user.ageDay}
+                            onChange = {handleChange}
+                            >
+                            <option> Day </option>
+                            {day}
+                        </select>
+                        </div>
+
+                        <div className = "pe-1"> 
+                        <select
+                            className = "text-center px-1"
                             id = "year"
                             name = "ageYear"
                             value = {user.ageYear}
                             onChange = {handleChange}
+                            required = "true"
                             >
+                            <option> Year </option>
                             {year}
                         </select>
                         </div>
