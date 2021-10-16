@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.loginBox {
+  text-align: center;
+  width: 300px;
+  border: 1px solid black;
+}
+
+.signupBox{
+  /* text-align: center; */
+  width: 400px;
+  border: 1px solid black;
+}
+
+

@@ -3,6 +3,7 @@ import { createUser, readUsers } from './utils/api';
 import { Switch, Route } from "react-router-dom"
 import Home from "./home";
 import Signup from "./accounts/signup";
+import "./App.css"
 
 function App() {
   return (
