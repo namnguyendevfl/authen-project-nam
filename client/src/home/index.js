@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, useRouteMatch, useHistory } from "react-router-dom"
 import Flashcards from "../flashcards";
 
-export default function Home({userLogedIn, setFound}) {
+export default function Home({userLogedIn, setFound, setUserLogedIn}) {
+    const initialUser = {
+        userName: "",
+        password: "",
+    }
     const history = useHistory();
     const handleFlashcards = () => history.push("/flashcards");
     const handleLogOut = () => {
         window.localStorage.removeItem('login');
         setFound(()=>false);
         history.push("/");
+        setUserLogedIn(initialUser);
     }
     return (
         <>

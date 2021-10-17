@@ -56,6 +56,7 @@ const [userLogedIn, setUserLogedIn] = useState(matchUser?matchUser[0]:initialUse
               <Home 
               userLogedIn = {userLogedIn}
               setFound = {setFound}
+              setUserLogedIn = {setUserLogedIn}
               />
           </div>
       :   <div>
