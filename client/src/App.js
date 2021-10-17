@@ -27,7 +27,7 @@ function App() {
     password: "",
 }
 
-const [userLogedIn, setUserLogedIn] = useState(matchUser[0]);
+const [userLogedIn, setUserLogedIn] = useState(matchUser?matchUser[0]:initialUser);
   useEffect (() => {
       const abortController = new AbortController();
       readUsers(abortController.signal)
@@ -51,10 +51,11 @@ const [userLogedIn, setUserLogedIn] = useState(matchUser[0]);
   return (
       <>
       <Errors error = {error} />
-      {matchUser 
+      {matchUser || found
       ?   <div >
               <Home 
               userLogedIn = {userLogedIn}
+              setFound = {setFound}
               />
           </div>
       :   <div>

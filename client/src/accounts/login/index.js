@@ -39,7 +39,6 @@ export default function Login({setFound, users, setUserLogedIn, userLogedIn}) {
                 message: "wrong credentials",
                 }));
         };
-        console.log(matchUser.user_id);
     }
  
 
