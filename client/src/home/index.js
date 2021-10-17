@@ -3,7 +3,7 @@ import { Switch, Route, useRouteMatch, useHistory } from "react-router-dom"
 import Flashcards from "../flashcards";
 
 
-export default function Home() {
+export default function Home({userLogedIn}) {
     const history = useHistory();
     const handleFlashcards = () => history.push("/flashcards")
         
@@ -21,7 +21,7 @@ export default function Home() {
                 </button>
                 </Route>
                 <Route path = "/flashcards">
-                        <Flashcards />
+                        <Flashcards userLogedIn = {userLogedIn}/>
                 </Route>
             </Switch>
         </div>

@@ -9,7 +9,12 @@ router
 
 router
 .route("/")
-.get(controller.read)
+.get(controller.readUsers)
 .all(notAllowedMethod);
+
+// router
+// .route("/:userId")
+// .get(controller.readUser)
+// .all(notAllowedMethod);
 
 module.exports = router;

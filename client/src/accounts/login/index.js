@@ -3,13 +3,10 @@ import { useHistory } from "react-router-dom";
 // import './index.css';
 import Errors from "../../errors";
 
-export default function Login({setFound, users}) {
-    const initialUser = {
-        userName: "",
-        password: "",
-    }
+let logedInUser = [];
 
-    const [userLogedIn, setUserLogedIn] = useState(initialUser);
+
+export default function Login({setFound, users, setUserLogedIn, userLogedIn}) {
     const [error, setError] = useState(null);
     
     const handleChange = ({target: {name, value}}) => {
@@ -21,14 +18,31 @@ export default function Login({setFound, users}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const found = users.some((user) => user.userName === userLogedIn.userName && user.password === userLogedIn.password);
-        found
-        ?   setFound(() => found)
-        :   setError(() => ({
-            message: "wrong credentials",
-            }));
+        // const found = users.some((user) => user.userName === userLogedIn.userName && user.password === userLogedIn.password);
+        // // const userLogedIn_id = users.find((user) => {
+        // //     if (user.userName === userLogedIn.userName && user.password === userLogedIn.password) {
+        // //         setUserLogedIn((prevUser) => ({...prevUser, user_id: user.user_id}));
+        // //         setMatch(()=>true);
+        // //     };
+        // // })
 
+        const matchUser= users.find((user) => user.userName === userLogedIn.userName && user.password === userLogedIn.password );
+        if(matchUser){
+            setUserLogedIn(() => matchUser);
+            logedInUser.push(matchUser);
+            setFound(() => true);
+            window.sessionStorage.setItem('login', JSON.stringify(logedInUser))
+            
+            // url = `${API_BASE_URL}/${matchUser.user_id}`;
+        } else {
+            setError(() => ({
+                message: "wrong credentials",
+                }));
+        };
+        console.log(matchUser.user_id);
     }
+ 
+
     const history = useHistory();
     const handleSignup = () => {
         history.push("/accounts/signup");
@@ -87,6 +101,14 @@ export default function Login({setFound, users}) {
                         Create New Account
                 </button>
             </div>
+            {/* {userLogedIn !== undefined
+            ?   <UserLogedIn userLogedIn = {userLogedIn} />
+            :   null
+            } */}
         </div>
     )
 }
+
+
+
+export const LogedInUser = () => logedInUser

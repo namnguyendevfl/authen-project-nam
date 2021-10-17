@@ -1,21 +1,22 @@
-const service = require("./decks.service");
+const service = require("./cards.service");
 const validator = require('validator');
+const asyncErrorBoundary = require("../../errors/asyncErrorBoundary")
 
 function hasData(req, res, next) {
     if (req.body.data) return next();
     next({status:400, message: "body must have data property"})
 };
 
-function hasName (req, res, next){
-    if(req.body.data.deck_name) return next()
-    next({status:400, message: "deck must have name"})
-};
+// function hasFront (req, res, next){
+//     if(req.body.data.front) return next()
+//     next({status:400, message: "deck must have front"})
+// };
 
-function hasDescription (req, res, next){
-    if(req.body.data.deck_description) return next()
-    next({status:400, message: "userName must be a phone number or an email address"})
+// function hasBack (req, res, next){
+//     if(req.body.data.back) return next()
+//     next({status:400, message: "userName must have back"})
     
-};
+// };
 // async function read(req,res, next) {
 //     const data = await service.read();
 //     res.json({
@@ -47,8 +48,8 @@ async function read(req,res, next) {
 
 async function create(req,res, next) {
     const data = await service.read();
-    const { userId } = req.params;
-    const foundUser = data.find((deck) => deck.user_id === Number(userId))
+    const { userId, deckId } = req.params;
+    const foundUser = data.find((card) => card.deckId === Number(deckId))
     const newDeck = await service.create(req.body.data);
     if (foundUser) {
         // const newDeck = await service.create(req.body.data);
@@ -58,12 +59,14 @@ async function create(req,res, next) {
     } else {
         next ({
             status: 400,
-            message : `user is not found ${userId}, data ${data}`
+            message : `user is not found userId ${userId}, data ${data}, deckId ${deckId}`
         })
     };
 }
 
+
 module.exports = {
-    create: [hasData, hasName, hasDescription, create],
+    // create: [hasData, hasFront, hasBack, create],
+    create: [hasData, asyncErrorBoundary(create)],
     read,
   };

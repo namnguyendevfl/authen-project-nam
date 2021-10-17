@@ -1,5 +1,5 @@
 const router = require("express").Router({mergeParams:true});
-const controller = require("./decks.controller");
+const controller = require("./cards.controller");
 const notAllowedMethod = require("../../errors/notAllowedMethod");
 
 router
@@ -14,7 +14,7 @@ router
 // .all(notAllowedMethod);
 
 router
-.route('/:userId/decks/new')
+.route('/:userId/decks/:deckId/new')
 .post(controller.create)
 .all(notAllowedMethod);
 

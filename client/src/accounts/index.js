@@ -3,7 +3,8 @@ import { Switch, Route } from "react-router-dom";
 import Login from "./login";
 import Signup from "./signup";
 
-export default function Accounts({users, setFound, found}) {
+export default function Accounts({users, setFound, found, setUserLogedIn, userLogedIn}) {
+    
     return (
         <>
         <div>
@@ -12,6 +13,8 @@ export default function Accounts({users, setFound, found}) {
                 <Login  users = {users} 
                         setFound = {setFound}
                         found = {found}
+                        setUserLogedIn = {setUserLogedIn}
+                        userLogedIn = {userLogedIn}
                 />
             </Route>
 

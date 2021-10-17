@@ -6,7 +6,7 @@ function hasData(req, res, next) {
     next({status:400, message: "body must have data property"})
 };
 
-function hasPassowrd (req, res, next){
+function hasPassword (req, res, next){
     const password = req.body.data.password;
     if (password.length >= 6) return next();
     next({status:400, message: "password is too short"})
@@ -19,7 +19,24 @@ function hasUserName (req, res, next){
     next({status:400, message: "userName must be a phone number or an email address"})
     
 };
-async function read(req,res, next) {
+
+
+// async function readUser(req,res, next) {
+//     const data = await service.read();
+//     const { userId } = req.params;
+//     const foundUser = data.find((user) => user.user_id === Number(userId))
+//     if (foundUser) {
+//     res.json({
+//         data : foundUser 
+//     })} else {
+//         next ({
+//             status: 400,
+//             message : `user is not found ${userId}`
+//         })
+//     }
+// }
+
+async function readUsers(req,res, next) {
     const data = await service.read();
     res.json({
         data
@@ -35,6 +52,7 @@ async function create(req, res, next) {
 
 
 module.exports = {
-    create: [hasData, hasUserName, hasPassowrd, create],
-    read,
+    create: [hasData, hasUserName, hasPassword, create],
+    readUsers,
+    // readUser
   };

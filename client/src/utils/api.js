@@ -1,9 +1,15 @@
+// import { LogedInUser } from "../accounts/login";
+
+import { DeckId } from "../flashcards/decks/Deck";
 
 // const API_BASE_URL = process.env.API_BASE_URL || "https://name-generator-backend-nam.herokuapp.com"
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:4000"
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:4000";
+
 
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
+let logedInUser = window.localStorage.getItem('login');
+logedInUser = JSON.parse(logedInUser);
 
 async function fetchJson(url, options) {
     try {
@@ -45,22 +51,100 @@ export async function readUsers(signal) {
     return await fetchJson(url,read);
 }
 
+// export async function readUser(signal, userId) {
+//     const url = `${API_BASE_URL}/1`;
+//     const read = {
+//         headers,
+//         signal
+//     }
+//     return await fetchJson(url,read);
+// }
+
+
+// export async function createDeck(deck, signal) {
+//     const url = `${API_BASE_URL}/flashcards/decks/new`;
+//     const create = {
+//         method: "POST",
+//         headers,
+//         signal,
+//         body: JSON.stringify({data:deck})
+//     };
+//     return await fetchJson(url,create);
+// }
+
 export async function createDeck(deck, signal) {
-    const url = `${API_BASE_URL}/flashcards/decks/new`;
-    const create = {
-        method: "POST",
-        headers,
-        signal,
-        body: JSON.stringify({data:deck})
-    };
-    return await fetchJson(url,create);
+    // const logedInUser = LogedInUser()
+    if(logedInUser.length !== 0) {
+        const userId = logedInUser[0].user_id;
+        const url = `${API_BASE_URL}/flashcards/${userId}/decks/new`;
+        const create = {
+            method: "POST",
+            headers,
+            signal,
+            body: JSON.stringify({data:deck})
+        };
+        return await fetchJson(url,create);
+    }
 }
 
+// export async function readDeck(signal) {
+//     const logedInUser = LogedInUser();
+//     const url = `${API_BASE_URL}/flashcards`;
+//     const read = {
+//         headers,
+//         signal
+//     }
+//     return await fetchJson(url,read);
+// }
+
 export async function readDeck(signal) {
-    const url = `${API_BASE_URL}/flashcards`;
-    const read = {
-        headers,
-        signal
+    // const logedInUser = LogedInUser()
+    if(logedInUser.length !== 0) {
+        const userId = logedInUser[0].user_id;
+        const url = `${API_BASE_URL}/flashcards/${userId}`;
+        const read = {
+            headers,
+            signal
+        }
+        return await fetchJson(url,read);
     }
-    return await fetchJson(url,read);
 }
+
+// export async function createCard(deck, signal) {
+//     const url = `${API_BASE_URL}/flashcards/decks/new`;
+//     const create = {
+//         method: "POST",
+//         headers,
+//         signal,
+//         body: JSON.stringify({data:deck})
+//     };
+//     return await fetchJson(url,create);
+// }
+
+export async function createCard(deck, signal) {
+    // const logedInUser = LogedInUser()
+    
+    const deckId = DeckId();
+    if(logedInUser.length !== 0) {
+        const userId = logedInUser[0].user_id;
+        const url = `${API_BASE_URL}/flashcards/${userId}/decks/${deckId}/new`;
+        console.log(url);
+        const create = {
+            method: "POST",
+            headers,
+            signal,
+            body: JSON.stringify({data:deck})
+        };
+        return await fetchJson(url,create);
+    }
+}
+
+// export async function readCards(signal) {
+//     const url = `${API_BASE_URL}/${CardsUrl}`;
+//     const read = {
+//         headers,
+//         signal
+//     }
+//     return await fetchJson(url,read);
+// }
+
