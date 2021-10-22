@@ -1,5 +1,6 @@
 const service = require("./accounts.service");
 const validator = require('validator');
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
 function hasData(req, res, next) {
     if (req.body.data) return next();
@@ -20,22 +21,6 @@ function hasUserName (req, res, next){
     
 };
 
-
-// async function readUser(req,res, next) {
-//     const data = await service.read();
-//     const { userId } = req.params;
-//     const foundUser = data.find((user) => user.user_id === Number(userId))
-//     if (foundUser) {
-//     res.json({
-//         data : foundUser 
-//     })} else {
-//         next ({
-//             status: 400,
-//             message : `user is not found ${userId}`
-//         })
-//     }
-// }
-
 async function readUsers(req,res, next) {
     const data = await service.read();
     res.json({
@@ -52,7 +37,7 @@ async function create(req, res, next) {
 
 
 module.exports = {
-    create: [hasData, hasUserName, hasPassword, create],
-    readUsers,
+    create: [hasData, hasUserName, hasPassword, asyncErrorBoundary(create)],
+    readUsers: asyncErrorBoundary(readUsers),
     // readUser
   };

@@ -1,4 +1,4 @@
-const service = require("./decks.service");
+const service = require("./books.service");
 const validator = require('validator');
 const asyncErrorBoundary = require("../../errors/asyncErrorBoundary")
 
@@ -8,12 +8,12 @@ function hasData(req, res, next) {
 };
 
 function hasName (req, res, next){
-    if(req.body.data.deck_name) return next()
+    if(req.body.data.title) return next()
     next({status:400, message: "deck must have name"})
 };
 
 function hasDescription (req, res, next){
-    if(req.body.data.deck_description) return next()
+    if(req.body.data.description) return next()
     next({status:400, message: "userName must be a phone number or an email address"})
     
 };
@@ -21,8 +21,8 @@ function hasDescription (req, res, next){
 
 async function read(req,res, next) {
     const data = await service.read();
-    const { userId } = req.params;
-    const foundUser = data.filter((deck) => deck.user_id === Number(userId))
+    const { bookId } = req.params;
+    const foundBook = data.filter((deck) => deck.user_id === Number(userId))
     if (foundUser) {
     res.json({
         data : foundUser 

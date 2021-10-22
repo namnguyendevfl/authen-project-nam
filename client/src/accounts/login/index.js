@@ -18,22 +18,14 @@ export default function Login({setFound, users, setUserLogedIn, userLogedIn}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // const found = users.some((user) => user.userName === userLogedIn.userName && user.password === userLogedIn.password);
-        // // const userLogedIn_id = users.find((user) => {
-        // //     if (user.userName === userLogedIn.userName && user.password === userLogedIn.password) {
-        // //         setUserLogedIn((prevUser) => ({...prevUser, user_id: user.user_id}));
-        // //         setMatch(()=>true);
-        // //     };
-        // // })
-
         const matchUser= users.find((user) => user.userName === userLogedIn.userName && user.password === userLogedIn.password );
         if(matchUser){
+            const userId = matchUser.user_id
             setUserLogedIn(() => matchUser);
             logedInUser.push(matchUser);
             setFound(() => true);
-            window.sessionStorage.setItem('login', JSON.stringify(logedInUser))
-            
-            // url = `${API_BASE_URL}/${matchUser.user_id}`;
+            window.localStorage.setItem('login', JSON.stringify(logedInUser))
+            window.localStorage.setItem('userId', JSON.stringify(userId))
         } else {
             setError(() => ({
                 message: "wrong credentials",
@@ -58,7 +50,7 @@ export default function Login({setFound, users, setUserLogedIn, userLogedIn}) {
                         name = "userName"
                         type = "text"
                         placeholder = "Phone number or email"
-                        value = {userLogedIn.username}
+                        value = {userLogedIn.userName}
                         onChange = {handleChange}
                         >
                     </input>
@@ -110,4 +102,4 @@ export default function Login({setFound, users, setUserLogedIn, userLogedIn}) {
 
 
 
-export const LogedInUser = () => logedInUser
+// export const LogedInUser = () => logedInUser

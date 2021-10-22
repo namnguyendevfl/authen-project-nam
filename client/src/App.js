@@ -1,57 +1,45 @@
 import React, { useState, useEffect } from "react"
-import { createUser, readUsers } from './utils/api';
+import { readUsers } from './utils/api';
 import Home from "./home";
 import "./App.css"
 import Errors from "./errors";
 import Accounts from "./accounts";
-import { LogedInUser } from "./accounts/login";
-// import UserLogedIn from "./accounts/login/UserLogedIn";
-
 
 function App() {
-  // const a = UserLogedIn();
-  // console.log(a);
+  let userId = null;
+  //Test windoeStorage
+    let deckId = window.localStorage.getItem('deckId');
+    deckId = JSON.parse(deckId);
+    userId = window.localStorage.getItem('userId');
+    userId = JSON.parse(userId);
+    let matchUser = window.localStorage.getItem('login');
+    matchUser = JSON.parse(matchUser);
 
-  let matchUser = window.localStorage.getItem('login');
-  matchUser = JSON.parse(matchUser);
-  // console.log(matchUser[0]);
-  // // console.log(LogedInUser());
+
   const [found, setFound ] = useState(null);
   const [users, setUsers] = useState([]);
-  // const [user, setUser] = useState();
-  const [error, setError] = useState(null);
-  
+  const [count, setCount] = useState(0);
 
+  const [error, setError] = useState(null);
   const initialUser = {
     userName: "",
     password: "",
-}
+};
 
 const [userLogedIn, setUserLogedIn] = useState(matchUser?matchUser[0]:initialUser);
+// const [userLogedIn, setUserLogedIn] = useState(initialUser);
   useEffect (() => {
       const abortController = new AbortController();
       readUsers(abortController.signal)
       .then(setUsers)
       .catch(setError);
       return () => abortController.abort();
-  }, [])
-
-//   useEffect (() => {
-//     const abortController = new AbortController();
-//     readUser(abortController.signal, userLogedIn.user_id)
-//     .then(setUser)
-//     .catch(setError);
-//     return () => abortController.abort();
-// }, [])
-  
-  console.log(userLogedIn);
-  // console.log(users)
-  // // console.log(userURL());
+  }, [count]);
 
   return (
       <>
       <Errors error = {error} />
-      {matchUser || found
+      {userId || found
       ?   <div >
               <Home 
               userLogedIn = {userLogedIn}
@@ -65,6 +53,8 @@ const [userLogedIn, setUserLogedIn] = useState(matchUser?matchUser[0]:initialUse
                       found = {found} 
                       userLogedIn = {userLogedIn}
                       setUserLogedIn = {setUserLogedIn}
+                      count = {count}
+                      setCount = {setCount}
                       /> 
           </div>}
       </>

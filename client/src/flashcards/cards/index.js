@@ -1,24 +1,47 @@
-import React from "react";
-import { DeckId, ViewDeckUrl } from "../decks/Deck";
+import React, { useEffect, useState } from "react";
 import { useRouteMatch  } from "react-router";
 import { Switch, Route, Link } from "react-router-dom";
 import CreateCard from "./CreateCard";
-let API_URL;
+import { readCards } from "../../utils/api";
+import Errors from "../../errors";
+import CardList from "./CardList";
+import Card from "./Card";
 
-let deckId;
-export default function Cards() {
-    const {url, path, params:{deckId}}  = useRouteMatch();
-    API_URL = url
-    // deckUrl = url;
-    console.log(url);
-    console.log(path);
+export default function Cards({}) {
+    const { url }  = useRouteMatch();
+    const [cards, setCards] = useState([]);
+    const [error, setError] = useState(null);
+    const [count, setCount] = useState(0)
+    let deckId = window.localStorage.getItem('deckId');
+    deckId = JSON.parse(deckId);
 
-    console.log(DeckId());
+    let deckSelected = window.localStorage.getItem('deckSelected');
+    deckSelected = JSON.parse(deckSelected);
+
+    let cardSelected = window.localStorage.getItem('cardSelected');
+    cardSelected = JSON.parse(cardSelected);
+
+    useEffect(() => {
+        const abortController = new AbortController();
+        readCards(abortController.signal, deckId)
+        .then(setCards)
+        .catch(setError);
+        return () => abortController.abort();
+    },[count]);
+
+    // console.log(deckSelected);
+    const listCards = cards.map((card,idx) => (
+        <CardList card = {card} deckSelected = {deckSelected}/>
+    ))
+
     return (
+        <>
+        <Errors error = {error} />
         <div>
             <Switch>
                 <Route exact path = {url}>
-                    This is card list
+                    <h1> {deckSelected.deck_name} </h1>
+                    {listCards}
                     <div>
                     <Link to = {`${url}/new`} >
                         <button> Create Card </button>
@@ -27,12 +50,13 @@ export default function Cards() {
                 </Route>
 
                 <Route path = {`${url}/new`}>
-                    <CreateCard />
+                    <CreateCard deckSelected = {deckSelected} count = {count} setCount = {setCount}/>
+                </Route>
+                <Route path = {`${url}/view-card`}>
+                    <Card cardSelected = {cardSelected}/>
                 </Route>
             </Switch>
         </div>
+        </>
     )
 }
-
-
-export const CardsUrl = () => API_URL

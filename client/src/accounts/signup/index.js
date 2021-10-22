@@ -3,7 +3,7 @@ import { useHistory  } from "react-router-dom";
 import Errors from "../../errors";
 import { createUser } from "../../utils/api";
 
-export default function Signup(){
+export default function Signup({count, setCount}){
     const history = useHistory();
     const initialUser = {
         firstName: "",
@@ -31,7 +31,10 @@ export default function Signup(){
     const handleSubmit = (event) => {
         event.preventDefault();
         createUser(user)
-        .then(() => history.push("/"))
+        .then(() => {
+            history.push("/");
+            setCount(() => count++);
+        })
         .catch(setError);
     }
     console.log(user);

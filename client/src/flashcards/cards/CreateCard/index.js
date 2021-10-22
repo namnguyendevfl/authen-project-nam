@@ -1,20 +1,28 @@
 import React, { useState } from "react"
 import Errors from "../../../errors";
-import { DeckId } from "../../decks/Deck";
 import { useHistory } from "react-router";
 import { createCard } from "../../../utils/api";
 
-export default function CreateCard() {
+
+export default function CreateCard({setCount, count}) {
+  
+    //Get logedInUder and deckId from localStorage
     let matchUser = window.localStorage.getItem('login');
     matchUser = JSON.parse(matchUser);
+    let deckId = window.localStorage.getItem('deckId');
+    deckId = JSON.parse(deckId);
+
+    let deckSelected = window.localStorage.getItem('deckSelected');
+    deckSelected = JSON.parse(deckSelected);
 
     const initialCard = {
         front: "",
         back: "",
-        deckId: DeckId(),
+        deckId: deckId,
         userId: matchUser[0].user_id
     }
 
+    console.log(deckSelected);
     const [card, setCard] = useState(initialCard);
     const [error, setError] = useState(null);
 
@@ -26,14 +34,17 @@ export default function CreateCard() {
     }
 
     const history = useHistory();
+
+    //history.push then setCount
     const handleSubmit = (event) => {
         event.preventDefault();
         createCard(card)
-        .then(() => history.push("/flashcards"))
+        .then(() => {
+            history.push(`/flashcards/view-deck/${deckSelected.deck_name.replaceAll(" ","-")}`)
+            setCount(() => count ++);
+        })
         .catch(setError);
     }
-
-    console.log(card);
 
     return (
         <>

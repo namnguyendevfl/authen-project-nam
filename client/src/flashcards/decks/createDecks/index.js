@@ -1,11 +1,10 @@
 import React,{ useState } from "react"
 import { createDeck } from "../../../utils/api";
-import { useHistory, useRouteMatch } from "react-router";
+import { useHistory } from "react-router";
 import Errors from "../../../errors";
-import { DeckId } from "../Deck";
 
-export default function CreateDeck({userLogedIn}) {
-    
+export default function CreateDeck({userLogedIn, count, setCount}) {
+    console.log(userLogedIn);
     const initalDeck = {
         deck_name: "",
         deck_description: "",
@@ -14,25 +13,23 @@ export default function CreateDeck({userLogedIn}) {
 
     const [deck, setDeck] = useState(initalDeck);
     const [error, setError] = useState(null);
-
     const handleChange = ({target: {name, value}}) => {
         setDeck ((prevDeck) => ({
             ...prevDeck,
             [name]: value,
         }))
     };
-    console.log(DeckId());
-    const {path, params:{deckId}}  = useRouteMatch();
     const history = useHistory();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        createDeck(deck)
-        .then(() => history.push(`/flashcards`))
+        createDeck(deck, userLogedIn.user_id)
+        .then(() => {
+            history.push(`/flashcards`);
+            setCount (() => count ++);
+        })
         .catch(setError);
     }
-
-    console.log(deck);
 
     return (
         <>
