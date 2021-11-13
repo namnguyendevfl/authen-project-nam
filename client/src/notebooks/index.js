@@ -2,6 +2,7 @@ import React from "react";
 import "./index.css";
 import { useHistory, useRouteMatch, Switch, Route } from "react-router";
 import CreateBook from "./CreateBook";
+import Layout from "./Layout";
 
 export default function Notebook() {
     const history = useHistory();
@@ -10,15 +11,13 @@ export default function Notebook() {
 
     return (
         <>
-
-
         <Switch>
             <Route exact path = {url}>
+                <Layout />
                 <button onClick = {(e) => history.push("/notebooks/new")}>Create book</button>
                     <h1> Book 1</h1>
                     <h2> Chap 8: blablabla</h2>
                     <p> This is paragraph
-
                     </p>
             </Route>
             <Route path = {`${url}/new`}>

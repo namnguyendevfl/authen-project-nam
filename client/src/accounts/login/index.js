@@ -16,6 +16,8 @@ export default function Login({setFound, users, setUserLogedIn, userLogedIn}) {
         }))
     }
 
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const matchUser= users.find((user) => user.userName === userLogedIn.userName && user.password === userLogedIn.password );
@@ -33,6 +35,7 @@ export default function Login({setFound, users, setUserLogedIn, userLogedIn}) {
         };
     }
  
+    console.log(userLogedIn)
 
     const history = useHistory();
     const handleSignup = () => {
